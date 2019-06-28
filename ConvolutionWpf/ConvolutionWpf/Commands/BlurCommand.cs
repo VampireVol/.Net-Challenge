@@ -26,28 +26,40 @@ namespace ConvolutionWpf.Commands
 
             var resultPixels = new byte[image.PixelHeight * image.BackBufferStride];
 
-            int kernel = 3;
+            int kernelSize = 3;
+            int halfKernelSize = kernelSize / 2;
+            double[,] kernel = new double[kernelSize, kernelSize];
+            double kernelValue = 1.0 / (kernelSize * kernelSize);
 
-            for (int i = kernel / 2; i < image.PixelWidth - kernel / 2; i++)
+            for (int i = 0; i < kernelSize; ++i)
             {
-                for (int j = kernel / 2; j < image.PixelHeight - kernel / 2; j++)
+                for (int j = 0; j < kernelSize; ++j)
+                {
+                    kernel[i, j] = kernelValue;
+                } 
+            }
+
+            for (int i = halfKernelSize; i < image.PixelWidth - halfKernelSize; ++i)
+            {
+                for (int j = halfKernelSize; j < image.PixelHeight - halfKernelSize; ++j)
                 {
                     int index = j * image.BackBufferStride + 4 * i;
 
-                    for (int c = 0; c < 3; c++)
+                    for (int k = 0; k < 3; ++k)
                     {
-                        int blurPixel = (pixels[index + c - 4] * (1) + pixels[index + c + 4] * (1)
-                                    + pixels[index + c - image.BackBufferStride] * (1) + pixels[index + c + image.BackBufferStride] * (1)) / 4;
-                        if (blurPixel < 0)
+                        double blurPixel = 0;
+                        for (int m = 0; m < kernelSize; ++m)
                         {
-                            blurPixel = 0;
+                            for (int n = 0; n < kernelSize; ++n)
+                            {
+                                int indexKernel = (j + n - halfKernelSize) * image.BackBufferStride + 4 * (i + m - halfKernelSize);
+                                blurPixel += kernel[m, n] * pixels[indexKernel + k];
+                            }
                         }
-                        else if (blurPixel > 255)
-                        {
-                            blurPixel = 255;
-                        }
-                        resultPixels[index + c] = (byte)(blurPixel);
+
+                        resultPixels[index + k] = (byte) blurPixel;
                     }
+
                     resultPixels[index + 3] = pixels[index + 3];
                 }
             }
