@@ -22,8 +22,9 @@ namespace ConvolutionWpf
             ContrastCmd = new ContrastCommand(() => Image);
             FlipCmd = new FlipCommand(() => Image);
             NegateCmd = new NegateCommand(() => Image);
-
-            EdgesCmd = new Command(() => { });
+            SobelEdgesCmd = new SobelEdgeDetectionCommand(() => Image);
+            ImpulseNoiseCmd = new ImpulseNoiseCommand(() => Image);
+            EdgesCmd = new EdgeDetectionCommand(() => Image);
 
             FlipCmd.OnImageChanged += img => Image = img;
         }
@@ -49,6 +50,10 @@ namespace ConvolutionWpf
         public Command SaveCmd { get; }
 
         public Command ResetCmd { get; }
+
+        public Command SobelEdgesCmd { get; }
+
+        public Command ImpulseNoiseCmd { get; }
 
         public static PropertyData ImagePathProperty = RegisterProperty("Image", typeof(WriteableBitmap));
 

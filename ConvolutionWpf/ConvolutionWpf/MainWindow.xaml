@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:windows="http://schemas.catelproject.com"
         mc:Ignorable="d"
-        Title=".Net Challenge [Ботаем циклы]" Height="480" Width="650">
+        Title=".Net Challenge [Ботаем циклы]" Height="550" Width="650">
     <windows:Window.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">
@@ -46,6 +46,8 @@
                     <Button Command="{Binding BlurCmd}">Blur</Button>
                     <Button Command="{Binding ContrastCmd}">Contrast Normalization</Button>
                     <Button Command="{Binding EdgesCmd}">Edges</Button>
+                    <Button Command="{Binding SobelEdgesCmd}">Sobel Edges</Button>
+                    <Button Command="{Binding ImpulseNoiseCmd}">Impulse Noise</Button>
                 </StackPanel>
             </GroupBox>
         </Grid>
