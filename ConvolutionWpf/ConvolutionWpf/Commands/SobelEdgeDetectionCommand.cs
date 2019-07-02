@@ -104,7 +104,7 @@ namespace ConvolutionWpf.Commands
             }
 
             var resultPixelsX = Convolution(image, kernelX, kernelSize);
-            var resultPixelsY = Convolution(image, kernelX, kernelSize);
+            var resultPixelsY = Convolution(image, kernelY, kernelSize);
             for (int i = 0; i < sizePixels; ++i)
             {
                 resultPixels[i] = (byte)Math.Sqrt(Math.Pow(resultPixelsX[i], 2) + Math.Pow(resultPixelsY[i], 2));
@@ -114,9 +114,9 @@ namespace ConvolutionWpf.Commands
 
         }
 
-        private byte[] Convolution(WriteableBitmap image, double[,] kernel, int kernelSize)
+        private double[] Convolution(WriteableBitmap image, double[,] kernel, int kernelSize)
         {
-            var resultPixels = new byte[image.PixelHeight * image.BackBufferStride];
+            var resultPixels = new double[image.PixelHeight * image.BackBufferStride];
             var pixels = new byte[image.PixelHeight * image.BackBufferStride];
             image.CopyPixels(pixels, image.BackBufferStride, 0);
             int halfKernelSize = kernelSize / 2;
@@ -138,7 +138,7 @@ namespace ConvolutionWpf.Commands
                             }
                         }
 
-                        resultPixels[index + k] = (byte)blurPixel;
+                        resultPixels[index + k] = blurPixel;
                     }
 
                     resultPixels[index + 3] = pixels[index + 3];

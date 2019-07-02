@@ -36,40 +36,40 @@ namespace ConvolutionWpf.Commands
 
             //todo
             int sampleSize = 3;
-            List<int> indexList = new List<int>();
+            int halfSampleSize = sampleSize / 2;
+            int medianSample = sampleSize * sampleSize / 2;
             List<byte> redPixels = new List<byte>();
             List<byte> greenPixels = new List<byte>();
             List<byte> bluePixels = new List<byte>();
-            for (int i = 0; i < sampleSize; ++i)
+
+            for (int i = halfSampleSize; i < image.PixelWidth - halfSampleSize; ++i)
             {
-                indexList.Add(i * image.BackBufferStride);
-                redPixels.Add(pixels[indexList[i]]);
-                greenPixels.Add(pixels[indexList[i] + 1]);
-                bluePixels.Add(pixels[indexList[i] + 2]);
-            }
-            for (int i = 0; i < image.PixelWidth; ++i)
-            {
-                for (int j = sampleSize; j < image.PixelHeight; ++j)
+                for (int j = halfSampleSize; j < image.PixelHeight - halfSampleSize; ++j)
                 {
-                    int index = (j - 2) * image.BackBufferStride + 4 * i;
+                    for (int m = 0; m < sampleSize; ++m)
+                    {
+                        for (int n = 0; n < sampleSize; ++n)
+                        {
+                            int indexSample = (j + n - halfSampleSize) * image.BackBufferStride + 4 * (i + m - halfSampleSize);
+                            redPixels.Add(pixels[indexSample]);
+                            greenPixels.Add(pixels[indexSample + 1]);
+                            bluePixels.Add(pixels[indexSample + 2]);
+                        }
+                    }
+
+                    int index = j * image.BackBufferStride + 4 * i;
                     redPixels.Sort();
                     greenPixels.Sort();
                     bluePixels.Sort();
 
-                    resultPixels[index] = redPixels[1];
-                    resultPixels[index + 1] = greenPixels[1];
-                    resultPixels[index + 2] = bluePixels[1];
+                    resultPixels[index] = redPixels[medianSample];
+                    resultPixels[index + 1] = greenPixels[medianSample];
+                    resultPixels[index + 2] = bluePixels[medianSample];
                     resultPixels[index + 3] = pixels[index + 3];
 
-                    indexList.Remove(0);
-                    redPixels.Remove(0);
-                    greenPixels.Remove(0);
-                    bluePixels.Remove(0);
-
-                    indexList.Add(j * image.BackBufferStride + 4 * i);
-                    redPixels.Add(pixels[indexList[i]]);
-                    greenPixels.Add(pixels[indexList[i] + 1]);
-                    bluePixels.Add(pixels[indexList[i] + 2]);
+                    redPixels.Clear();
+                    greenPixels.Clear();
+                    bluePixels.Clear();
                 }
             }
 
