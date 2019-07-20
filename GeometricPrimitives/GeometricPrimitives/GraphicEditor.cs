@@ -8,30 +8,30 @@ namespace GeometricPrimitives
 {
     class GraphicEditor
     {
-        public List<Shape> primitives;
+        private List<Shape> _primitives;
 
         public GraphicEditor()
         {
-            primitives = new List<Shape>();
+            _primitives = new List<Shape>();
         }
 
         public void Add(Shape shape)
         {
-            primitives.Add(shape);
+            _primitives.Add(shape);
         }
 
         public void Del(int num)
         {
-            primitives.RemoveAt(num);
+            _primitives.RemoveAt(num);
         }
 
         public double CalcAllSquare()
         {
             double square = 0;
-            int size = primitives.Count;
+            int size = _primitives.Count;
             for (int i = 0; i < size; ++i)
             {
-                square += primitives[i].square;
+                square += _primitives[i].Square;
             }
 
             return square;
@@ -39,15 +39,15 @@ namespace GeometricPrimitives
 
         public void MoveToPrimitive(int num, double x, double y)
         {
-            primitives[num].MoveTo(x, y);
+            _primitives[num].MoveTo(x, y);
         }
 
         public void PrintAllInfo()
         {
-            int size = primitives.Count;
+            int size = _primitives.Count;
             for (int i = 0; i < size; ++i)
             {
-                Console.WriteLine(i + ": " + primitives[i]);
+                Console.WriteLine(i + ": " + _primitives[i]);
             }
         }
     }

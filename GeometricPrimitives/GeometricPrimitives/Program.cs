@@ -17,8 +17,9 @@ namespace GeometricPrimitives
             graphicEditor.Add(new Rectangle(10,20));
             graphicEditor.PrintAllInfo();
             Console.WriteLine("Площадь всех объектов: " + graphicEditor.CalcAllSquare());
-            Console.WriteLine("\nНапример, переместим прямоугольник и удалим треугольник.\n");
+            Console.WriteLine("\nНапример, переместим прямоугольник и удалим треугольник.\n +Переместим начало прямой");
             graphicEditor.MoveToPrimitive(3, 5,6);
+            graphicEditor.MoveToPrimitive(0, 1, 1);
             graphicEditor.Del(2);
             graphicEditor.PrintAllInfo();
             Console.WriteLine("Площадь всех объектов: " + graphicEditor.CalcAllSquare());

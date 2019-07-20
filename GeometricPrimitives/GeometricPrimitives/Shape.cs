@@ -9,127 +9,156 @@ namespace GeometricPrimitives
 {
     abstract class Shape
     {
-        public double x { get; set; }
-        public double y { get; set; }
-        public double square { get; set; }
-
-        public Shape(double x = 0, double y = 0)
+        private double _x;
+        public double X
         {
-            this.x = x;
-            this.y = y;
-            square = 0;
+            get => _x;
+            private set
+            {
+                _x = value;
+                Update();
+            }
+        }
+
+        private double _y;
+        public double Y
+        {
+            get => _y;
+            private set
+            {
+                _y = value;
+                Update();
+            }
+        }
+        public double Square { get; set; }
+
+        protected Shape(double x = 0, double y = 0)
+        {
+            X = x;
+            Y = y;
+            Square = 0;
         }
 
         public void MoveTo(double x, double y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
-        virtual protected double CalcSquare()
+        protected virtual double CalcSquare()
         {
             return 0;
+        }
+
+        protected virtual void Update()
+        {
+
         }
     }
 
     class Line : Shape
     {
-        public double xTo { get; set; }
-        public double yTo { get; set; }
-        public double lenght { get; set; }
+        public double Length { get; private set; }
+        public double XTo { get; }
+        public double YTo { get; }
 
         public Line(double xTo = 0, double yTo = 0, double xFrom = 0, double yFrom = 0)
             : base(xFrom, yFrom)
         {
-            this.xTo = xTo;
-            this.yTo = yTo;
-            lenght = CalcLenght();
+            XTo = xTo;
+            YTo = yTo;
+            Length = CalcLength();
         }
 
-        private double CalcLenght()
+        private double CalcLength()
         {
-            return Math.Sqrt(Math.Pow(x - xTo, 2) + Math.Pow(y - yTo, 2));
+            return Math.Sqrt(Math.Pow(X - XTo, 2) + Math.Pow(Y - YTo, 2));
         }
 
         public override string ToString()
         {
-            return $"Прямая. Положение х: {x}, y: {y}.\nДо х: {xTo}, y: {yTo}.\nДлина: {lenght}.";
+            return $"Прямая. Положение х: {X}, y: {Y}.\nДо х: {XTo}, y: {YTo}.\nДлина: {Length}.";
+        }
+
+        protected override void Update()
+        {
+            Length = CalcLength();
         }
     }
 
     class Circle : Shape
     {
-        public double radius { get; set; }
+        public double Radius { get; }
 
         public Circle(double radius, double x = 0, double y = 0)
             : base(x, y)
         {
-            this.radius = radius;
-            square = CalcSquare();
+            Radius = radius;
+            Square = CalcSquare();
         }
 
         protected override double CalcSquare()
         {
-            return 2 * Math.PI * radius;
+            return 2 * Math.PI * Radius;
         }
 
         public override string ToString()
         {
-            return $"Окружность. Положение х: {x}, y: {y}.\nРадиус: {radius}.\nПлощадь: {square}.";
+            return $"Окружность. Положение х: {X}, y: {Y}.\nРадиус: {Radius}.\nПлощадь: {Square}.";
         }
     }
 
     class Triangle : Shape
     {
-        public double angle { get; set; }
-        public double leftLenght { get; set; }
-        public double rightLenght { get; set; }
+        public double Angle { get; }
+        public double LeftLength { get; }
+        public double RightLength { get; }
 
-        public Triangle(double leftLenght, double rightLenght, double angle = 0, double x = 0, double y = 0)
+        public Triangle(double leftLength, double rightLength, double angle = 0, double x = 0, double y = 0)
             : base(x, y)
         {
-            this.leftLenght = leftLenght;
-            this.rightLenght = rightLenght;
-            this.angle = angle;
-            square = CalcSquare();
+            LeftLength = leftLength;
+            RightLength = rightLength;
+            Angle = angle;
+            Square = CalcSquare();
         }
 
         protected override double CalcSquare()
         {
-            return 0.5 * Math.Sin(angle * Math.PI / 180.0) * leftLenght * rightLenght;
+            return 0.5 * Math.Sin(Angle * Math.PI / 180.0) * LeftLength * RightLength;
         }
 
         public override string ToString()
         {
-            return $"Треугольник. Положение х: {x}, y: {y}.\n" +
-                   $"Угол: {angle}. Длина левой прямой: {leftLenght}. Длина правой прямой: {rightLenght}.\n" +
-                   $"Площадь: {square}.";
+            return $"Треугольник. Положение х: {X}, y: {Y}.\n" +
+                   $"Угол: {Angle}. Длина левой прямой: {LeftLength}. Длина правой прямой: {RightLength}.\n" +
+                   $"Площадь: {Square}.";
         }
     }
 
     class Rectangle : Shape
     {
-        public double leftLenght { get; set; }
-        public double rightLenght { get; set; }
+        public double LeftLength { get; }
+        public double RightLength { get; }
 
-        public Rectangle(double leftLenght, double rightLenght, double x = 0, double y = 0)
+        public Rectangle(double leftLength, double rightLength, double x = 0, double y = 0)
             : base(x, y)
         {
-            this.leftLenght = leftLenght;
-            this.rightLenght = rightLenght;
-            square = CalcSquare();
+            LeftLength = leftLength;
+            RightLength = rightLength;
+            Square = CalcSquare();
         }
 
-        protected override double CalcSquare()
+        protected sealed override double CalcSquare()
         {
-            return leftLenght * rightLenght;
+            return LeftLength * RightLength;
         }
 
         public override string ToString()
         {
-            return $"Прямоугольник. Положение х: {x}, y: {y}.\n" +
-                   $"Длина левой прямой: {leftLenght}. Длина правой прямой: {rightLenght}.\n" +
-                   $"Площадь: {square}.";
+            return $"Прямоугольник. Положение х: {X}, y: {Y}.\n" +
+                   $"Длина левой прямой: {LeftLength}. Длина правой прямой: {RightLength}.\n" +
+                   $"Площадь: {Square}.";
         }
     }
 }
