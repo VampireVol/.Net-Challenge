@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace River
 {
-    abstract class Fish
+    public abstract class Fish
     {
         protected Fish(double x, double y, double z, int maxSpeed, Random rnd)
         {
@@ -21,6 +21,7 @@ namespace River
         public double Y { get; private set; }
         public double Z { get; private set; }
         public int MaxSpeed { get; }
+
         private Random _rnd;
 
         public virtual void Move()
@@ -41,59 +42,5 @@ namespace River
             return (_rnd.NextDouble() - 0.5) > 0 ? 1 : -1;
         }
 
-    }
-
-    class Pike : Fish, IComparable<Pike>
-    {
-        private int Weight { get; set; }
-        private const int AddWeightPerEat = 5;
-
-
-        public Pike(double x, double y, double z, Random rnd)
-            : base(x, y, z, 5, rnd)
-        {
-            Weight = 5;
-        }
-
-        public override void Move()
-        {
-            base.Move();
-            --Weight;
-        }
-
-        public void Eat()
-        {
-            Weight += AddWeightPerEat;
-        }
-
-        public bool IsDie()
-        {
-            return Weight == 0;
-        }
-
-        public int CompareTo(Pike other)
-        {
-            return Weight.CompareTo(other.Weight);
-        }
-
-        public override string ToString()
-        {
-            return $"Щука. Вес:{Weight}\n" +
-                   $"x:{X} y:{Y} z:{Z}.";
-        }
-    }
-
-    class Rudd : Fish
-    {
-        public Rudd(double x, double y, double z, Random rnd)
-            : base(x, y, z, 2, rnd)
-        {
-
-        }
-
-        public override string ToString()
-        {
-            return $"Красноперка. x:{X} y:{Y} z:{Z}";
-        }
     }
 }
