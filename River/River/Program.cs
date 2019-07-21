@@ -11,7 +11,7 @@ namespace River
     {
         static void Main(string[] args)
         {
-            River river = new River(20, 10, 10, 1000, 3,1.5);
+            River river = new River(20, 500, 1000, 3000, 3,1.2);
             river.StartSimulations();
         }
     }
@@ -20,38 +20,33 @@ namespace River
     {
         private List<Pike> _pikes;
         private List<Rudd> _rudds;
-        public double RiverSize { get; private set; }
-        public int PikeCount { get; private set; }
-        public int RuddCount { get; private set; }
         public int StepsCount { get; private set; }
-        public double DistanceWhenRuddDie { get; private set; }
-        public double DistanceWhenRuddBorn { get; private set; }
+        public double DistanceWhenRuddDie { get; }
+        public double DistanceWhenRuddBorn { get; }
         private Random _rnd;
+        private const int MaxRudds = 3000;
 
         public River(double riverSize, int pikeCount, int ruddCount, int stepsCount, double distanceWhenRuddDie, double distanceWhenRuddBorn)
         {
-            RiverSize = riverSize;
-            PikeCount = pikeCount;
-            RuddCount = ruddCount;
             StepsCount = stepsCount;
             DistanceWhenRuddDie = distanceWhenRuddDie;
             DistanceWhenRuddBorn = distanceWhenRuddBorn;
             _pikes = new List<Pike>();
             _rudds = new List<Rudd>();
             _rnd = new Random();
-            for (int i = 0; i < PikeCount; ++i)
+            for (int i = 0; i < pikeCount; ++i)
             {
-                _pikes.Add(new Pike((_rnd.NextDouble() - 0.5) * RiverSize,
-                    (_rnd.NextDouble() - 0.5) * RiverSize, 
-                    (_rnd.NextDouble() - 0.5) * RiverSize,
+                _pikes.Add(new Pike((_rnd.NextDouble() - 0.5) * riverSize,
+                    (_rnd.NextDouble() - 0.5) * riverSize, 
+                    (_rnd.NextDouble() - 0.5) * riverSize,
                     _rnd));
             }
 
-            for (int i = 0; i < RuddCount; ++i)
+            for (int i = 0; i < ruddCount; ++i)
             {
-                _rudds.Add(new Rudd((_rnd.NextDouble() - 0.5) * RiverSize,
-                    (_rnd.NextDouble() - 0.5) * RiverSize,
-                    (_rnd.NextDouble() - 0.5) * RiverSize,
+                _rudds.Add(new Rudd((_rnd.NextDouble() - 0.5) * riverSize,
+                    (_rnd.NextDouble() - 0.5) * riverSize,
+                    (_rnd.NextDouble() - 0.5) * riverSize,
                     _rnd));
             }
         }
@@ -72,13 +67,17 @@ namespace River
                     _rudds[i].Move();
                     //Console.WriteLine(_rudds[i]);
                 }
-                BornRudds();
+                if (_rudds.Count < MaxRudds)
+                    BornRudds();
+                if (_rudds.Count != 0)
+                    PikesEat();
+                PikesDie();
                 //Console.ReadKey();
                 Thread.Sleep(100);
             }
         }
 
-        public void BornRudds()
+        private void BornRudds()
         {
             List<Rudd> bornRudds = new List<Rudd>();
             for (int i = 0; i < _rudds.Count - 1; ++i)
@@ -115,11 +114,65 @@ namespace River
             }
         }
 
+        private void PikesEat()
+        {
+            for (int i = 0; i < _pikes.Count; ++i)
+            {
+                if (_rudds.Count == 0)
+                {
+                    return;
+                }
+                List<double> length = new List<double>();
+                for (int j = 0; j < _rudds.Count; ++j)
+                {
+                    length.Add(Math.Sqrt(Math.Pow(_pikes[i].X - _rudds[j].X, 2) +
+                                         Math.Pow(_pikes[i].Y - _rudds[j].Y, 2) +
+                                         Math.Pow(_pikes[i].Z - _rudds[j].Z, 2)));
+                }
+                double minLength = length.Min();
+                if (minLength < DistanceWhenRuddDie)
+                {
+                    int minIndex = 0;
+                    for (int j = 0; j < length.Count; j++)
+                    {
+                        if (length[j] == minLength)
+                        {
+                            minIndex = j;
+                            break;
+                        }
+                    }
+                    _rudds.RemoveAt(minIndex);
+                    _pikes[i].Eat();
+                }
+            }
+        }
+
+        private void PikesDie()
+        {
+            List<int> indexDie = new List<int>();
+            for (int i = 0; i < _pikes.Count; ++i)
+            {
+                if (_pikes[i].IsDie())
+                {
+                    indexDie.Add(i);
+                }
+            }
+
+            for (int i = indexDie.Count - 1; i >= 0; --i)
+            {
+                _pikes.RemoveAt(indexDie[i]);
+            }
+        }
+
         public override string ToString()
         {
             return $"До конца симуляций осталось итераций: {StepsCount}\n" +
                    $"Красноперок {_rudds.Count}\n" +
-                   $"Щук {_pikes.Count}";
+                   $"Щук {_pikes.Count}\n" +
+                   $"Самая толстая щука:\n" +
+                   $"{_pikes.Max()}\n" +
+                   $"Самая тощая щука:\n" +
+                   $"{_pikes.Min()}";
         }
     }
 }
