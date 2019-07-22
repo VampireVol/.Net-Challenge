@@ -236,7 +236,6 @@ namespace Tennis
             if (second.Domination)
             {
                 second.Domination = false;
-                first.Domination = true;
             }
             else if (first.Domination)
             {
