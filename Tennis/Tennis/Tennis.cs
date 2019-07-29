@@ -6,21 +6,33 @@ namespace Tennis
     public class Tennis
     {
         private Random _rnd;
+
         private const int MaxRoll = 20;
+
         private int _skillFirstPlayer;
+
         private int _skillSecondPlayer;
 
+
         private GamePoints _gamePointsFirst;
+
         private GamePoints _gamePointsSecond;
 
+
         private int _setGamesFirst = 0;
+
         private int _setGamesSecond = 0;
 
+
         private int _setPointsFirst = 0;
+
         private int _setPointsSecond = 0;
 
+
         private bool _tiebreakerGame = false;
+
         private int _tiebreakerPointsFirst = 0;
+
         private int _tiebreakerPointsSecond = 0;
 
         public Tennis(Random rnd, int skillFirstPlayer, int skillSecondPlayer)

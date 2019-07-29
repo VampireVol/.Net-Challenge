@@ -18,8 +18,11 @@ namespace River
         }
 
         public double X { get; private set; }
+
         public double Y { get; private set; }
+
         public double Z { get; private set; }
+
         public int MaxSpeed { get; }
 
         private Random _rnd;

@@ -8,15 +8,19 @@ namespace River
     public class River
     {
         private List<Pike> _pikes;
+
         private List<Rudd> _rudds;
+
         private Random _rnd;
 
         private const int MaxRudds = 3000;
-
+        
         public int StepsCount { get; private set; }
-        public double DistanceWhenRuddDie { get; }
-        public double DistanceWhenRuddBorn { get; }
 
+        public double DistanceWhenRuddDie { get; }
+
+        public double DistanceWhenRuddBorn { get; }
+        
         public River(double riverSize, int pikeCount, int ruddCount, int stepsCount, double distanceWhenRuddDie, double distanceWhenRuddBorn)
         {
             StepsCount = stepsCount;
@@ -41,7 +45,7 @@ namespace River
                     _rnd));
             }
         }
-
+        
         public void StartSimulations()
         {
             while (StepsCount-- > 0)
