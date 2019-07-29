@@ -3,6 +3,7 @@
     public class GamePoints
     {
         public int Points { get; private set; } = 0;
+
         public bool Domination { get; set; } = false;
 
         public void Add()
