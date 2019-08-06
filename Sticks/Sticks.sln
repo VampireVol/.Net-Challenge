@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sticks", "Sticks\Sticks.csproj", "{A55B8394-5915-484C-A829-947A99866EF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A55B8394-5915-484C-A829-947A99866EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55B8394-5915-484C-A829-947A99866EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55B8394-5915-484C-A829-947A99866EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55B8394-5915-484C-A829-947A99866EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A65B7A71-FC39-424C-8382-AB3D1C134319}
+	EndGlobalSection
+EndGlobal
