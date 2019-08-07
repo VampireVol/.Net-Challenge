@@ -16,11 +16,11 @@ namespace FractalTree
 
         public MainWindow()
         {
-            Loaded += (sender, args) => DrawFractal(new Point(400, 450), 200, Math.PI / 2.5, 50);
-            InitializeComponent();
+            Random rnd = new Random();
+            Loaded += (sender, args) => DrawFractal(new Point(400, 450), 200, Math.PI / 2, 8, rnd);
         }
 
-        private void DrawFractal(Point start, double length, double angle, int count)
+        private void DrawFractal(Point start, double length, double angle, int count, Random rnd)
         {
             var myLine = new Line
             {
@@ -40,8 +40,15 @@ namespace FractalTree
             else
             {
                 //Задержка в отрисовке для создания анимации
-                Sleep(100);
-                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.2, angle + Math.PI / 2.5, count - 1);
+                Sleep();
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.5, angle + Math.PI / 3.5 * rnd.NextDouble(), count - 1, rnd);
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.5, angle - Math.PI / 3.5 * rnd.NextDouble(), count - 1, rnd);
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.5, angle - Math.PI / 3.5 * rnd.NextDouble(), count - 1, rnd);
+                /*
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.45, angle + Math.PI / 3, count - 1);
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.45, angle - Math.PI / 3, count - 1);
+                DrawFractal(new Point(myLine.X2, myLine.Y2), length / 1.45, angle + Math.PI, count - 1);
+                */
             }
         }
 
