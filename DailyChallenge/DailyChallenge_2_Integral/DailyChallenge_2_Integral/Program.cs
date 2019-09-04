@@ -11,7 +11,7 @@ namespace DailyChallenge_2_Integral
         static void Main(string[] args)
         {
             double a, b, c, e, x1, x2;
-            Console.WriteLine("Введите коэффиценты уравнения и точность нахождения минимума и границы интеграла [x1, x2].");
+            Console.WriteLine("Введите коэффиценты уравнения и точность нахождения минимума и границы интеграла [x1, x2]. Дробные числа вводить через , !!!!!");
             Console.Write("a = ");
             double.TryParse(Console.ReadLine(), out a);
             Console.Write("b = ");
@@ -37,7 +37,7 @@ namespace DailyChallenge_2_Integral
             a += e / 2;
             while (a < b)
             {
-                sum += Math.Abs(parabola.Calc(a)) * e;
+                sum += parabola.Calc(a) * e;
                 a += e;
             }
             return sum;
