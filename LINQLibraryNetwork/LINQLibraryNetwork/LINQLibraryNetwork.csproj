@@ -46,14 +46,19 @@
     <Compile Include="Book.cs" />
     <Compile Include="CopyBook.cs" />
     <Compile Include="District.cs" />
+    <Compile Include="DistrictTown.cs" />
     <Compile Include="Edition.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Library.cs" />
+    <Compile Include="LibraryCopyBook.cs" />
+    <Compile Include="LibraryVisitor.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelaseForm.cs" />
     <Compile Include="Town.cs" />
     <Compile Include="Visitor.cs" />
+    <Compile Include="VisitorCopyBook.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

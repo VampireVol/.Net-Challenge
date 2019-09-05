@@ -11,5 +11,7 @@ namespace LINQLibraryNetwork
         public Guid Id { get; }
 
         public int PageCount { get; }
+
+        public Guid BookId { get; }
     }
 }

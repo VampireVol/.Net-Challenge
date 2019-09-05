@@ -10,8 +10,5 @@ namespace LINQLibraryNetwork
     {
         public Guid Id { get; }
 
-        public List<Guid> LibrarysId { get; }
-
-
     }
 }

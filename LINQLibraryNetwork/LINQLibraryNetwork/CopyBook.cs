@@ -13,7 +13,5 @@ namespace LINQLibraryNetwork
         public Guid BookId { get; }
 
         public RelaseForm RelaseForm { get; }
-
-        public Guid EditionId { get; }
     }
 }
