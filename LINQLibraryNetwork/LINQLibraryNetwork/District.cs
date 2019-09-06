@@ -10,5 +10,15 @@ namespace LINQLibraryNetwork
     {
         public Guid Id { get; }
 
+        public Guid TownId { get; }
+
+        public string Name { get; }
+
+        public District(string name, Guid townId)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+            TownId = townId;
+        }
     }
 }

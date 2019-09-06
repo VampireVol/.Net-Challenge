@@ -12,6 +12,13 @@ namespace LINQLibraryNetwork
 
         public int PageCount { get; }
 
-        public Guid BookId { get; }
+        public Guid CopyBookId { get; }
+
+        public Edition(int pageCount, Guid copyBookId)
+        {
+            PageCount = pageCount;
+            CopyBookId = copyBookId;
+            Id = Guid.NewGuid();
+        }
     }
 }

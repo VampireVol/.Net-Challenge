@@ -10,5 +10,12 @@ namespace LINQLibraryNetwork
     {
         public Guid Id { get; }
 
+        public string Name { get; }
+
+        public Visitor(string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+        }
     }
 }

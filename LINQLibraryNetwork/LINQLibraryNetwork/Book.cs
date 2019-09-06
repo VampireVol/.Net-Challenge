@@ -15,6 +15,14 @@ namespace LINQLibraryNetwork
         public string Title { get; }
 
         public Genre Genre { get; }
+
+        public Book(string author, string title, Genre genre)
+        {
+            Author = author;
+            Title = title;
+            Genre = genre;
+            Id = Guid.NewGuid();
+        }
         
     }
 }

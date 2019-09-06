@@ -13,5 +13,12 @@ namespace LINQLibraryNetwork
         public Guid BookId { get; }
 
         public RelaseForm RelaseForm { get; }
+
+        public CopyBook(RelaseForm relaseForm, Guid bookId)
+        {
+            RelaseForm = relaseForm;
+            BookId = bookId;
+            Id = Guid.NewGuid();
+        }
     }
 }
