@@ -45,6 +45,32 @@ namespace LINQLibraryNetwork
                 new Library("Городская библиотека №4", "Ул. Каменская, 33", districts[2].Id)
             };
 
+            List<LibraryVisitor> libraryVisitors = new List<LibraryVisitor>()
+            {
+                new LibraryVisitor(libraries[0].Id, visitors[0].Id),
+                new LibraryVisitor(libraries[1].Id, visitors[0].Id),
+                new LibraryVisitor(libraries[4].Id, visitors[0].Id),
+                new LibraryVisitor(libraries[0].Id, visitors[1].Id),
+                new LibraryVisitor(libraries[6].Id, visitors[1].Id),
+                new LibraryVisitor(libraries[0].Id, visitors[2].Id),
+                new LibraryVisitor(libraries[0].Id, visitors[3].Id),
+                new LibraryVisitor(libraries[2].Id, visitors[3].Id),
+                new LibraryVisitor(libraries[6].Id, visitors[3].Id),
+                new LibraryVisitor(libraries[3].Id, visitors[3].Id),
+                new LibraryVisitor(libraries[0].Id, visitors[5].Id),
+                new LibraryVisitor(libraries[1].Id, visitors[5].Id),
+                new LibraryVisitor(libraries[7].Id, visitors[6].Id),
+                new LibraryVisitor(libraries[7].Id, visitors[7].Id),
+                new LibraryVisitor(libraries[5].Id, visitors[2].Id),
+                new LibraryVisitor(libraries[4].Id, visitors[2].Id),
+                new LibraryVisitor(libraries[2].Id, visitors[2].Id),
+                new LibraryVisitor(libraries[0].Id, visitors[6].Id),
+                new LibraryVisitor(libraries[5].Id, visitors[6].Id),
+                new LibraryVisitor(libraries[2].Id, visitors[5].Id),
+                new LibraryVisitor(libraries[3].Id, visitors[5].Id),
+                new LibraryVisitor(libraries[4].Id, visitors[5].Id),
+            };
+
             List<Book> books = new List<Book>()
             {
                 new Book("Крис Метцен","World of Warcraft. Варкрафт: Хроники. Энциклопедия. Том 1", Genre.Fantasy),
@@ -109,6 +135,52 @@ namespace LINQLibraryNetwork
                 Console.WriteLine(withoutLibDistrict.Name);
             }
 
+            Console.WriteLine();
+
+            var libVisitors = from lv in libraryVisitors
+                join l in libraries on lv.LibraryId equals l.Id
+                join v in visitors on lv.VisitorId equals v.Id
+                select new { VName = v.Name, LName = l.Name};
+            
+            foreach (var libVisitor in libVisitors)
+            {
+                Console.WriteLine($"{libVisitor.VName} {libVisitor.LName}");
+            }
+
+            Console.WriteLine();
+
+            var groupLibVisitors = from lv in libraryVisitors
+                                   join l in libraries on lv.LibraryId equals l.Id
+                                   join v in visitors on lv.VisitorId equals v.Id
+                                   group v by l.Name;
+
+            foreach (var groupLibVisitor in groupLibVisitors)
+            {
+                Console.WriteLine(groupLibVisitor.Key);
+                foreach (var visitor in groupLibVisitor)
+                {
+                    Console.WriteLine(visitor.Name);
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            var groupDisVisitors = from d in districts
+                join l in libraries on d.Id equals l.DistrictId
+                join lv in libraryVisitors on l.Id equals lv.LibraryId
+                join v in visitors on lv.VisitorId equals v.Id
+                group v by d.Name;
+
+            foreach (var groupDisVisitor in groupDisVisitors)
+            {
+                Console.WriteLine(groupDisVisitor.Key);
+                foreach (var visitor in groupDisVisitor)
+                {
+                    Console.WriteLine(visitor.Name);
+                }
+                Console.WriteLine();
+            }
 
             Console.ReadKey();
         }
